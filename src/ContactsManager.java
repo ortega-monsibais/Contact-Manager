@@ -2,7 +2,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -91,14 +93,32 @@ public class ContactsManager {
     }
 
     public static void addCon() {
-        System.out.println("addCon works!");
-        startup();
+        System.out.println("Add a contact's name: ");
         //TODO: Add a line to an existing file skeleton method - 2
-//    Files.write(
-//            Paths.get("data", "groceries.txt"),
-//            Arrays.asList("eggs"), // list with one item
-//    StandardOpenOption.APPEND
-//);
+        String userIn = scanner.nextLine();
+        try {
+            Files.write(
+                    Paths.get("src", "contacts.txt"),
+                    Arrays.asList(userIn), // list with one item
+                    StandardOpenOption.APPEND
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Add a contact's number: ");
+        //TODO: Add a line to an existing file skeleton method - 2
+        userIn = scanner.nextLine();
+        try {
+            Files.write(
+                    Paths.get("src", "contacts.txt"),
+                    Arrays.asList(userIn), // list with one item
+                    StandardOpenOption.APPEND
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        startup();
+
 
     }
 
