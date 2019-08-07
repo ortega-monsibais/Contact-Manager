@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import static java.nio.file.Files.readAllLines;
+
 public class ContactsManager {
     String name;
     String phone;
@@ -71,7 +73,7 @@ public class ContactsManager {
 
         List<String> contactList = new ArrayList<>();
         try {
-            contactList = Files.readAllLines(contactPath);
+            contactList = readAllLines(contactPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -123,25 +125,26 @@ public class ContactsManager {
     }
 
     public static void searchCon() {
-        System.out.println("searchCon works!");
-        startup();
-        //TODO: if exists skeleton method - 3
-//    String directory = "data";
-//    String filename = "info.txt";
-//
-//    Path dataDirectory = Paths.get(directory);
-//    Path datafile = Paths.get(directory, filename);
-////            try {
-//        if (Files.notExists(dataDirectory)) {
-//        Files.createDirectories(dataDirectory);
-//    } else if (!Files.exists(datafile)){
-//                Files.createFile(dataFile);
-//            }
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//
+        System.out.println("Search by name: ");
 
+        String userIn = scanner.nextLine().toLowerCase();
+        //TODO: if exists skeleton method - 3
+        try {
+//                System.out.println("That contact exists!");
+                List<String> results = Files.readAllLines(contactPath);
+                for (int i = 0; i < results.size(); i += 1) {
+                    if (results.get(i).toLowerCase().contains(userIn)) {
+                        System.out.println(results.get(i) + " | " + results.get(i + 1));
+                        startup();
+                    } else {
+                        System.out.println("Try again!");
+                    }
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        startup();
     }
 
     public static void editCon() {
