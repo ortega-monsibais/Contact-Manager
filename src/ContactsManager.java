@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ContactsManager {
@@ -10,6 +12,7 @@ public class ContactsManager {
 
     static Scanner scanner = new Scanner(System.in);
     static String num;
+    static Path contactPath = Paths.get("src", "contacts.txt");
 
     public static void main(String[] args) {
 //        Path datafile = Paths.get(".", "data", "data.txt");
@@ -61,14 +64,29 @@ public class ContactsManager {
     }
 
     public static void viewCon() {
-        System.out.println("viewCon works!");
-        startup();
+//        System.out.println("viewCon works!");
         //TODO: Print out each line in an existing file, along with the line number skeleton method - 1
-//    Path groceriesPath = Paths.get("data", "groceries.txt");
-//    List<String> groceryList = Files.readAllLines(groceriesPath);
-//
-//for (int i = 0; i < groceryList.size(); i += 1) {
-//        System.out.println((i + 1) + ": " + groceryList.get(i));
+
+        List<String> contactList = new ArrayList<>();
+        try {
+            contactList = Files.readAllLines(contactPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String fin = "";
+        int countThis = 1;
+        for (int i = 0; i < contactList.size(); i += 1) {
+            if (countThis % 2 == 0) {
+                fin += contactList.get(i);
+                System.out.println(fin);
+                countThis -= 1;
+            } else {
+                countThis++;
+                fin = contactList.get(i) + " | ";
+            }
+
+        }
+        startup();
 
     }
 
