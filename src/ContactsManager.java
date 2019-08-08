@@ -16,11 +16,6 @@ public class ContactsManager {
     static String num;
     static Path contactPath = Paths.get("src", "contacts.txt");
 
-    public boolean yesNo() {
-        String input = scanner.nextLine();
-        return input.equals("yes") || input.equals("y");
-    }
-
     public static void main(String[] args) throws IOException {
         startup();
     }
@@ -100,7 +95,7 @@ public class ContactsManager {
             String phone = line.split("\\|")[1];
             phone = format(phone);
             String pipe = "|";
-            System.out.printf("%-15s%10s %10s%n", name, pipe, phone);
+            System.out.printf("%-15s%10s %7s%n", name, pipe, phone);
         }
         startup();
 
@@ -130,9 +125,7 @@ public class ContactsManager {
         System.out.println("Search by name: ");
 
         String userIn = scanner.nextLine().toLowerCase();
-        //TODO: if exists skeleton method - 3
         try {
-//                System.out.println("That contact exists!");
             List<String> results = Files.readAllLines(contactPath);
             for (int i = 0; i < results.size(); i += 1) {
                 if (results.get(i).toLowerCase().contains(userIn)) {
