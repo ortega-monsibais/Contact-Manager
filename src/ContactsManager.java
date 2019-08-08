@@ -106,7 +106,8 @@ public class ContactsManager {
             String name = line.split("\\|")[0];
             String phone = line.split("\\|")[1];
             phone = format(phone);
-            System.out.printf("%s | %s%n", name, phone);
+            String pipe = "|";
+            System.out.printf("%-15s%10s %10s%n", name, pipe, phone);
         }
         startup();
 
