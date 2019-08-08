@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import static java.nio.file.Files.readAllLines;
 import static javax.swing.UIManager.getString;
@@ -21,6 +22,7 @@ public class ContactsManager {
     }
 
     public static void startup() throws IOException {
+        System.out.println("Welcome to contacts manager");
         System.out.println("\n1. View contacts.\n" +
                 "2. Add a new contact.\n" +
                 "3. Search a contact by name.\n" +
@@ -88,8 +90,8 @@ public class ContactsManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("       Name             | Phone number \n" +
-                "---------------------------");
+        System.out.println("Name                    | Phone number \n" +
+                "---------------------------------------");
         for (String line : contactList) {
             String name = line.split("\\|")[0];
             String phone = line.split("\\|")[1];
@@ -97,7 +99,13 @@ public class ContactsManager {
             String pipe = "|";
             System.out.printf("%-15s%10s %7s%n", name, pipe, phone);
         }
-        startup();
+        try {
+            Thread.sleep(1000);
+            startup();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -130,7 +138,12 @@ public class ContactsManager {
             for (int i = 0; i < results.size(); i += 1) {
                 if (results.get(i).toLowerCase().contains(userIn)) {
                     System.out.println(results.get(i));
-                    startup();
+                    try {
+                        Thread.sleep(1000);
+                        startup();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         } catch (IOException ex) {
