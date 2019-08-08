@@ -179,9 +179,9 @@ public class ContactsManager {
                 if (contactConfirm.toLowerCase().contains("y")) {
                     System.out.println("Please write a replacement name.");
                     userIn2 = scanner.nextLine();
-                        String name = replaceThis.split("\\|")[0];
-                        String phone = replaceThis.split("\\|")[1];
-                        newCon = (userIn2 +"|" + phone);
+                    String name = replaceThis.split("\\|")[0];
+                    String phone = replaceThis.split("\\|")[1];
+                    newCon = (userIn2 + "|" + phone);
                     for (String line : lines) {
                         if (line.contains(replaceThis)) {
                             newList.add(newCon);
@@ -202,16 +202,46 @@ public class ContactsManager {
 
     public static void deleteCon() throws IOException {
 //        System.out.println("deleteCon works!");
-        startup();
         //TODO: list and write to file skeleton method - 4 but replace with nothing.
-        String deleteContact = scanner.nextLine();
-        List<String> contactList = new ArrayList<>();
+        List<String> lines = Files.readAllLines(contactPath);
+        List<String> newList = new ArrayList<>();
+        System.out.println("What contact would you like to delete?");
+        String userIn1 = scanner.nextLine().toLowerCase();
+        String userIn2 = "";
+        String replaceThis = "";
+        String newCon = "";
+        int replaceIndex = 0;
 
-//    Path filepath = Paths.get("data", "groceries.txt");
-//Files.write(filepath, groceryList);
+
+        for (int i = 0; i < lines.size(); i += 1) {
+            if (lines.get(i).toLowerCase().contains(userIn1)) {
+                System.out.println("The selected contact is:  " + lines.get(i));
+                replaceThis = lines.get(i);
+                replaceIndex = i;
+                System.out.println("are you sure you want to delete this contact?.");
+                String yesorno = scanner.nextLine();
+                if (yesorno.toLowerCase().contains("y")) {
+//                    for (String line : lines) {
+//                        if (line.contains(replaceThis)) {
+//                            newList.remove(replaceIndex);
+//                        }
+//                        Files.write((contactPath), newList);
 
 
+
+
+
+
+
+
+                        startup();
+                    }
+
+                } else if (i == lines.size() - 1) {
+                    System.out.println("The contact you are looking for does not exist.");
+                    startup();
+                }
+            }
+        }
     }
-
-
 }
