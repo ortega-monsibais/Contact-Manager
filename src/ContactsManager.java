@@ -207,41 +207,32 @@ public class ContactsManager {
         List<String> newList = new ArrayList<>();
         System.out.println("What contact would you like to delete?");
         String userIn1 = scanner.nextLine().toLowerCase();
-        String userIn2 = "";
+//        String userIn2 = "";
         String replaceThis = "";
-        String newCon = "";
-        int replaceIndex = 0;
+//        String newCon = "";
+//        int replaceIndex = 0;
 
 
         for (int i = 0; i < lines.size(); i += 1) {
             if (lines.get(i).toLowerCase().contains(userIn1)) {
                 System.out.println("The selected contact is:  " + lines.get(i));
                 replaceThis = lines.get(i);
-                replaceIndex = i;
+//                replaceIndex = i;
                 System.out.println("are you sure you want to delete this contact?.");
                 String yesorno = scanner.nextLine();
                 if (yesorno.toLowerCase().contains("y")) {
-//                    for (String line : lines) {
-//                        if (line.contains(replaceThis)) {
-//                            newList.remove(replaceIndex);
-//                        }
-//                        Files.write((contactPath), newList);
-
-
-
-
-
-
-
-
-                        startup();
+                    for (String line : lines) {
+                        if (line.contains(replaceThis)) {
+                            continue;
+                        }
+                        newList.add(line);
                     }
-
-                } else if (i == lines.size() - 1) {
-                    System.out.println("The contact you are looking for does not exist.");
+                    Files.write((contactPath), newList);
                     startup();
+
                 }
             }
         }
     }
+
 }
