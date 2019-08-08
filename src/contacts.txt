@@ -1,8 +1,5 @@
-Jack Blank
-1231231234
-Jane Doe
-2342342345
-Sam Space
-3453453456
-fghj
-123445565677565
+Jack Blank|1231231234
+Jane Drone|45678908
+Sam Space|3453453456
+dsfasdfsa|1234567
+duiafhaio sudf|0987654

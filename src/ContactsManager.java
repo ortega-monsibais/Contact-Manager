@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static java.nio.file.Files.readAllLines;
+import static javax.swing.UIManager.getString;
 
 public class ContactsManager {
     String name;
@@ -18,13 +19,19 @@ public class ContactsManager {
     static String num;
     static Path contactPath = Paths.get("src", "contacts.txt");
 
-    public static void main(String[] args) {
+    //    private static String contactFormat = " |  %n";
+    public boolean yesNo() {
+        String input = scanner.nextLine();
+        return input.equals("yes") || input.equals("y");
+    }
+
+    public static void main(String[] args) throws IOException {
 //        Path datafile = Paths.get(".", "data", "data.txt");
 //        System.out.println(datafile);
         startup();
     }
 
-    public static void startup() {
+    public static void startup() throws IOException {
         System.out.println("\n1. View contacts.\n" +
                 "2. Add a new contact.\n" +
                 "3. Search a contact by name.\n" +
@@ -67,7 +74,25 @@ public class ContactsManager {
 
     }
 
-    public static void viewCon() {
+    //format numbers
+//    private static String format(String phone) {
+//        if (phone.length() == 7) {
+//            String first = phone.substring(0, 3);
+//            String second = phone.substring(3, 7);
+//            return first + "-" + second;
+//        } else if (num.length() == 10) {
+//            String first = phone.substring(0, 3);
+//            String second = phone.substring(3, 6);
+//            String third = phone.substring(6, 10);
+//            return first + "-" + second + "-" + third;
+//        } else if (phone.length() > 10) {
+//            return phone;
+//        } else {
+//            return "Invalid entry";
+//        }
+//    }
+
+    public static void viewCon() throws IOException {
 //        System.out.println("viewCon works!");
         //TODO: Print out each line in an existing file, along with the line number skeleton method - 1
 
@@ -79,41 +104,30 @@ public class ContactsManager {
         }
         String fin = "";
         int countThis = 1;
-        for (int i = 0; i < contactList.size(); i += 1) {
-            if (countThis % 2 == 0) {
-                fin += contactList.get(i);
-                System.out.println(fin);
-                countThis -= 1;
-            } else {
-                countThis++;
-                fin = contactList.get(i) + " | ";
-            }
-
+        for (String line : contactList) {
+            String name = line.split("\\|")[0];
+            String phone = line.split("\\|")[1];
+            System.out.printf("%s | %s%n", name, phone);
         }
         startup();
 
     }
 
-    public static void addCon() {
+    public static void addCon() throws IOException {
         System.out.println("Add a contact's name: ");
         //TODO: Add a line to an existing file skeleton method - 2
-        String userIn = scanner.nextLine();
-        try {
-            Files.write(
-                    Paths.get("src", "contacts.txt"),
-                    Arrays.asList(userIn), // list with one item
-                    StandardOpenOption.APPEND
-            );
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String userIn1 = scanner.nextLine();
+
         System.out.println("Add a contact's number: ");
         //TODO: Add a line to an existing file skeleton method - 2
-        userIn = scanner.nextLine();
+        String userIn2 = scanner.nextLine();
+//        String addNumber = scanner.nextLine();
+//        String formattedNumber = format(addNumber);
+//        String addContact = userIn + "|" + formattedNumber;
         try {
             Files.write(
                     Paths.get("src", "contacts.txt"),
-                    Arrays.asList(userIn), // list with one item
+                    Arrays.asList(userIn1 + "|" + userIn2), // list with one item
                     StandardOpenOption.APPEND
             );
         } catch (IOException e) {
@@ -124,21 +138,19 @@ public class ContactsManager {
 
     }
 
-    public static void searchCon() {
+    public static void searchCon() throws IOException {
         System.out.println("Search by name: ");
 
         String userIn = scanner.nextLine().toLowerCase();
         //TODO: if exists skeleton method - 3
         try {
 //                System.out.println("That contact exists!");
-                List<String> results = Files.readAllLines(contactPath);
-                for (int i = 0; i < results.size(); i += 1) {
-                    if (results.get(i).toLowerCase().contains(userIn)) {
-                        System.out.println(results.get(i) + " | " + results.get(i + 1));
-                        startup();
-                    } else {
-                        System.out.println("Try again!");
-                    }
+            List<String> results = Files.readAllLines(contactPath);
+            for (int i = 0; i < results.size(); i += 1) {
+                if (results.get(i).toLowerCase().contains(userIn)) {
+                    System.out.println(results.get(i));
+                    startup();
+                }
             }
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -147,32 +159,57 @@ public class ContactsManager {
         startup();
     }
 
-    public static void editCon() {
-        System.out.println("editCon works!");
-        startup();
+    public static void editCon() throws IOException {
+//        System.out.println("editCon works!");
 //TODO: Replace "milk" with "cream" - Optional, would be cool to have an edit feature
-//    List<String> lines = Files.readAllLines(Paths.get("data", "groceries.txt"));
-//    List<String> newList = new ArrayList<>();
-//
-//for (String line : lines) {
-//        if (line.equals("milk")) {
-//            newList.add("cream");
-//            continue;
-//        }
-//        newList.add(line);
-//    }
-//
-//Files.write(Paths.get("data", "groceries.txt"), newList);
+        List<String> lines = Files.readAllLines(contactPath);
+        List<String> newList = new ArrayList<>();
+        System.out.println("What contact would you like to edit?");
+        String userIn1 = scanner.nextLine().toLowerCase();
+        String userIn2 = "dumb";
+        String replaceThis = "stupid";
+        String newCon = "Ah";
 
+
+        for (int i = 0; i < lines.size(); i += 1) {
+            if (lines.get(i).toLowerCase().contains(userIn1)) {
+                System.out.println("Is this the contact you are looking for? " + lines.get(i));
+                replaceThis = lines.get(i);
+                String contactConfirm = scanner.nextLine();
+                if (contactConfirm.toLowerCase().contains("y")) {
+                    System.out.println("Please write a replacement name.");
+                    userIn2 = scanner.nextLine();
+                        String name = replaceThis.split("\\|")[0];
+                        String phone = replaceThis.split("\\|")[1];
+                        newCon = (userIn2 +"|" + phone);
+                    for (String line : lines) {
+                        if (line.contains(replaceThis)) {
+                            newList.add(newCon);
+                            continue;
+                        }
+                        newList.add(line);
+                    }
+                    Files.write((contactPath), newList);
+                    startup();
+                }
+
+            } else if (i == lines.size() - 1) {
+                System.out.println("The contact you are looking for does not exist.");
+                startup();
+            }
+        }
     }
 
-    public static void deleteCon() {
-        System.out.println("deleteCon works!");
+    public static void deleteCon() throws IOException {
+//        System.out.println("deleteCon works!");
         startup();
         //TODO: list and write to file skeleton method - 4 but replace with nothing.
-//    List<String> groceryList = Arrays.asList("coffee", "milk", "sugar");
+        String deleteContact = scanner.nextLine();
+        List<String> contactList = new ArrayList<>();
+
 //    Path filepath = Paths.get("data", "groceries.txt");
 //Files.write(filepath, groceryList);
+
 
     }
 
