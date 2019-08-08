@@ -12,22 +12,16 @@ import static java.nio.file.Files.readAllLines;
 import static javax.swing.UIManager.getString;
 
 public class ContactsManager {
-    String name;
-    String phone;
-
     static Scanner scanner = new Scanner(System.in);
     static String num;
     static Path contactPath = Paths.get("src", "contacts.txt");
 
-    //    private static String contactFormat = " |  %n";
     public boolean yesNo() {
         String input = scanner.nextLine();
         return input.equals("yes") || input.equals("y");
     }
 
     public static void main(String[] args) throws IOException {
-//        Path datafile = Paths.get(".", "data", "data.txt");
-//        System.out.println(datafile);
         startup();
     }
 
@@ -74,7 +68,7 @@ public class ContactsManager {
 
     }
 
-//    format numbers
+    //    format numbers
     private static String format(String phone) {
         if (phone.length() == 7) {
             String first = phone.substring(0, 3);
@@ -93,15 +87,14 @@ public class ContactsManager {
     }
 
     public static void viewCon() throws IOException {
-//        System.out.println("viewCon works!");
-        //TODO: Print out each line in an existing file, along with the line number skeleton method - 1
-
         List<String> contactList = new ArrayList<>();
         try {
             contactList = readAllLines(contactPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("       Name             | Phone number \n" +
+                "---------------------------");
         for (String line : contactList) {
             String name = line.split("\\|")[0];
             String phone = line.split("\\|")[1];
@@ -115,15 +108,10 @@ public class ContactsManager {
 
     public static void addCon() throws IOException {
         System.out.println("Add a contact's name: ");
-        //TODO: Add a line to an existing file skeleton method - 2
         String userIn1 = scanner.nextLine();
 
         System.out.println("Add a contact's number: ");
-        //TODO: Add a line to an existing file skeleton method - 2
         String userIn2 = scanner.nextLine();
-//        String addNumber = scanner.nextLine();
-//        String formattedNumber = format(addNumber);
-//        String addContact = userIn + "|" + formattedNumber;
         try {
             Files.write(
                     Paths.get("src", "contacts.txt"),
@@ -160,8 +148,6 @@ public class ContactsManager {
     }
 
     public static void editCon() throws IOException {
-//        System.out.println("editCon works!");
-//TODO: Replace "milk" with "cream" - Optional, would be cool to have an edit feature
         List<String> lines = Files.readAllLines(contactPath);
         List<String> newList = new ArrayList<>();
         System.out.println("What contact would you like to edit?");
@@ -201,23 +187,17 @@ public class ContactsManager {
     }
 
     public static void deleteCon() throws IOException {
-//        System.out.println("deleteCon works!");
-        //TODO: list and write to file skeleton method - 4 but replace with nothing.
         List<String> lines = Files.readAllLines(contactPath);
         List<String> newList = new ArrayList<>();
         System.out.println("What contact would you like to delete?");
         String userIn1 = scanner.nextLine().toLowerCase();
-//        String userIn2 = "";
-        String replaceThis = "";
-//        String newCon = "";
-//        int replaceIndex = 0;
+        String replaceThis;
 
 
         for (int i = 0; i < lines.size(); i += 1) {
             if (lines.get(i).toLowerCase().contains(userIn1)) {
                 System.out.println("The selected contact is:  " + lines.get(i));
                 replaceThis = lines.get(i);
-//                replaceIndex = i;
                 System.out.println("are you sure you want to delete this contact?.");
                 String yesorno = scanner.nextLine();
                 if (yesorno.toLowerCase().contains("y")) {
