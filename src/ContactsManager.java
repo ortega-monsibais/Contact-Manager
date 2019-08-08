@@ -74,23 +74,23 @@ public class ContactsManager {
 
     }
 
-    //format numbers
-//    private static String format(String phone) {
-//        if (phone.length() == 7) {
-//            String first = phone.substring(0, 3);
-//            String second = phone.substring(3, 7);
-//            return first + "-" + second;
-//        } else if (num.length() == 10) {
-//            String first = phone.substring(0, 3);
-//            String second = phone.substring(3, 6);
-//            String third = phone.substring(6, 10);
-//            return first + "-" + second + "-" + third;
-//        } else if (phone.length() > 10) {
-//            return phone;
-//        } else {
-//            return "Invalid entry";
-//        }
-//    }
+//    format numbers
+    private static String format(String phone) {
+        if (phone.length() == 7) {
+            String first = phone.substring(0, 3);
+            String second = phone.substring(3, 7);
+            return first + "-" + second;
+        } else if (phone.length() == 10) {
+            String first = phone.substring(0, 3);
+            String second = phone.substring(3, 6);
+            String third = phone.substring(6, 10);
+            return first + "-" + second + "-" + third;
+        } else if (phone.length() > 10) {
+            return phone;
+        } else {
+            return "Invalid entry";
+        }
+    }
 
     public static void viewCon() throws IOException {
 //        System.out.println("viewCon works!");
@@ -102,11 +102,10 @@ public class ContactsManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String fin = "";
-        int countThis = 1;
         for (String line : contactList) {
             String name = line.split("\\|")[0];
             String phone = line.split("\\|")[1];
+            phone = format(phone);
             System.out.printf("%s | %s%n", name, phone);
         }
         startup();
