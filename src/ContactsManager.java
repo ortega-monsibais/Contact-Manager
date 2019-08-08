@@ -17,8 +17,9 @@ public class ContactsManager {
     static Scanner scanner = new Scanner(System.in);
     static String num;
     static Path contactPath = Paths.get("src", "contacts.txt");
+//    private static String contactFormat = " |  %n";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 //        Path datafile = Paths.get(".", "data", "data.txt");
 //        System.out.println(datafile);
         startup();
@@ -67,6 +68,24 @@ public class ContactsManager {
 
     }
 
+    //format numbers
+//    private static String format(String phone) {
+//        if (phone.length() == 7) {
+//            String first = phone.substring(0, 3);
+//            String second = phone.substring(3, 7);
+//            return first + "-" + second;
+//        } else if (num.length() == 10) {
+//            String first = phone.substring(0, 3);
+//            String second = phone.substring(3, 6);
+//            String third = phone.substring(6, 10);
+//            return first + "-" + second + "-" + third;
+//        } else if (phone.length() > 10) {
+//            return phone;
+//        } else {
+//            return "Invalid entry";
+//        }
+//    }
+
     public static void viewCon() {
 //        System.out.println("viewCon works!");
         //TODO: Print out each line in an existing file, along with the line number skeleton method - 1
@@ -79,16 +98,21 @@ public class ContactsManager {
         }
         String fin = "";
         int countThis = 1;
-        for (int i = 0; i < contactList.size(); i += 1) {
-            if (countThis % 2 == 0) {
-                fin += contactList.get(i);
-                System.out.println(fin);
-                countThis -= 1;
-            } else {
-                countThis++;
-                fin = contactList.get(i) + " | ";
-            }
-
+//        for (int i = 0; i < contactList.size(); i += 1) {
+//            if (countThis % 2 == 0) {
+//                fin += contactList.get(i);
+//                System.out.println(fin);
+//                countThis -= 1;
+//            } else {
+//                countThis++;
+//                fin = contactList.get(i) + " | ";
+//            }
+//
+//        }
+        for (String line: contactList) {
+            String name = line.split("\\|")[0];
+            String phone = line.split("\\|")[1];
+            System.out.printf("%s | %s%n", name,phone);
         }
         startup();
 
@@ -110,6 +134,9 @@ public class ContactsManager {
         System.out.println("Add a contact's number: ");
         //TODO: Add a line to an existing file skeleton method - 2
         userIn = scanner.nextLine();
+//        String addNumber = scanner.nextLine();
+//        String formattedNumber = format(addNumber);
+//        String addContact = userIn + "|" + formattedNumber;
         try {
             Files.write(
                     Paths.get("src", "contacts.txt"),
@@ -167,12 +194,14 @@ public class ContactsManager {
     }
 
     public static void deleteCon() {
-        System.out.println("deleteCon works!");
+//        System.out.println("deleteCon works!");
         startup();
         //TODO: list and write to file skeleton method - 4 but replace with nothing.
-//    List<String> groceryList = Arrays.asList("coffee", "milk", "sugar");
+        String deleteContact = scanner.nextLine();
+    List<String> contactList = new ArrayList<>();
 //    Path filepath = Paths.get("data", "groceries.txt");
 //Files.write(filepath, groceryList);
+
 
     }
 
