@@ -18,10 +18,6 @@ public class ContactsManager {
     static Path contactPath = Paths.get("src", "contacts.txt");
 
     public static void main(String[] args) throws IOException {
-        startup();
-    }
-
-    public static void startup() throws IOException {
         System.out.println("Welcome to contacts manager\n" +
                 "\n" +
                 "  ______                               _   _____             _             _       \n" +
@@ -32,6 +28,10 @@ public class ContactsManager {
                 "  \\_|  \\___|_|  |___/\\___/|_| |_|\\__,_|_|  \\____/\\___/|_| |_|\\__\\__,_|\\___|\\__|___/\n"
         );
 
+        startup();
+    }
+
+    public static void startup() throws IOException {
         System.out.println("\n1. View contacts.\n" +
                 "2. Add a new contact.\n" +
                 "3. Search a contact by name.\n" +
@@ -213,7 +213,7 @@ public class ContactsManager {
             if (lines.get(i).toLowerCase().contains(userIn1)) {
                 System.out.println("The selected contact is:  " + lines.get(i));
                 replaceThis = lines.get(i);
-                System.out.println("are you sure you want to delete this contact?.");
+                System.out.println("Are you sure you want to delete this contact?.");
                 String yesorno = scanner.nextLine();
                 if (yesorno.toLowerCase().contains("y")) {
                     for (String line : lines) {
