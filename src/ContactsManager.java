@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import java.util.Collections;
 
 import static java.nio.file.Files.readAllLines;
 import static javax.swing.UIManager.getString;
@@ -101,6 +102,7 @@ public class ContactsManager {
         }
         System.out.println("Name                    | Phone number \n" +
                 "---------------------------------------");
+        Collections.sort(contactList);
         for (String line : contactList) {
             String name = line.split("\\|")[0];
             String phone = line.split("\\|")[1];
