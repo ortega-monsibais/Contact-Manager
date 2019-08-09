@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import java.util.Collections;
 
 import static java.nio.file.Files.readAllLines;
 import static javax.swing.UIManager.getString;
@@ -101,6 +102,7 @@ public class ContactsManager {
         }
         System.out.println("Name                    | Phone number \n" +
                 "---------------------------------------");
+        Collections.sort(contactList);
         for (String line : contactList) {
             String name = line.split("\\|")[0];
             String phone = line.split("\\|")[1];
@@ -146,7 +148,10 @@ public class ContactsManager {
             List<String> results = Files.readAllLines(contactPath);
             for (int i = 0; i < results.size(); i += 1) {
                 if (results.get(i).toLowerCase().contains(userIn)) {
-                    System.out.println(results.get(i));
+                    String name = results.get(i).split("\\|")[0];
+                    String phone = results.get(i).split("\\|")[1];
+                    phone = format(phone);
+                    System.out.println(name + " | " + phone);
                     try {
                         Thread.sleep(1000);
                         startup();
@@ -174,7 +179,11 @@ public class ContactsManager {
 
         for (int i = 0; i < lines.size(); i += 1) {
             if (lines.get(i).toLowerCase().contains(userIn1)) {
-                System.out.println("Is this the contact you are looking for? " + lines.get(i));
+                System.out.println("Is this the contact you are looking for?");
+                String name1 = lines.get(i).split("\\|")[0];
+                String phone1 = lines.get(i).split("\\|")[1];
+                phone1 = format(phone1);
+                System.out.println(name1 + " | " + phone1);
                 replaceThis = lines.get(i);
                 String contactConfirm = scanner.nextLine();
                 if (contactConfirm.toLowerCase().contains("y")) {
